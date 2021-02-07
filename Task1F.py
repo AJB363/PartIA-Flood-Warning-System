@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: MIT
 
 from floodsystem.stationdata import build_station_list
+from floodsystem.station import inconsistent_typical_range_stations
 
 
 def run():
@@ -11,7 +12,10 @@ def run():
     # Build list of stations
     stations = build_station_list()
 
+    # Print names of inconsistent stations
+    print(sorted([s.name for s in inconsistent_typical_range_stations(stations)]))
+
 
 if __name__ == "__main__":
-    print("*** Task 1A: CUED Part IA Flood Warning System ***")
+    print("*** Task 1F: CUED Part IA Flood Warning System ***")
     run()

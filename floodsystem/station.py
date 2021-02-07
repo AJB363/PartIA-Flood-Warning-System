@@ -45,3 +45,7 @@ class MonitoringStation:
             return self.typical_range[0] <= self.typical_range[1]
         except Exception:
             return False
+
+
+def inconsistent_typical_range_stations(stations):
+    return [s for s in stations if not s.typical_range_consistent()]
