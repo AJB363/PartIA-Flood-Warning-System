@@ -12,7 +12,6 @@ from floodsystem.utils import sorted_by_key # noqa
 
 def stations_by_distance(stations, p):
     """ Returns the stations in order from closest to furthest from coordinate p """
-
     sorted_stations = []
     for station in stations:
         sorted_stations.append((station, haversine(station.coord, p)))
@@ -28,3 +27,11 @@ def stations_within_radius(stations, centre, r):
         if haversine(station.coord, centre) <= r:
             within_radius.append(station)
     return within_radius
+
+
+def rivers_with_station(stations):
+    """ Returns the set of rivers that have stations """
+    rivers = set([])
+    for station in stations:
+        rivers.add(station.river)
+    return rivers
