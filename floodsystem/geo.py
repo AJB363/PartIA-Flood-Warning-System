@@ -35,3 +35,13 @@ def rivers_with_station(stations):
     for station in stations:
         rivers.add(station.river)
     return rivers
+
+
+def stations_by_river(stations):
+    """ Returns a dictionary of stations, by the river they are next to """
+    by_river = dict()
+    for station in stations:
+        if station.river not in by_river:
+            by_river[station.river] = []
+        by_river[station.river].append(station)
+    return by_river
