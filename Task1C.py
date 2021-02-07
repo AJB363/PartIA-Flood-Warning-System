@@ -12,7 +12,7 @@ def run():
     radius = 10.0
     within_radius = stations_within_radius(stations, centre, radius)
 
-    # Print the closest and furthest 10
+    # Print the stations
     stations = []
     for station in within_radius:
         stations.append(station.name)
