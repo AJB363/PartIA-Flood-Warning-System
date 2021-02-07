@@ -38,3 +38,10 @@ class MonitoringStation:
         d += "   river:         {}\n".format(self.river)
         d += "   typical range: {}".format(self.typical_range)
         return d
+
+    def typical_range_consistent(self):
+        """ True when high range >= low range. False otherwise """
+        try:
+            return self.typical_range[0] <= self.typical_range[1]
+        except Exception:
+            return False

@@ -25,3 +25,24 @@ def test_create_monitoring_station():
     assert s.typical_range == trange
     assert s.river == river
     assert s.town == town
+
+
+def test_typical_range_consistent_is_true_only_for_consistent_typical_ranges():
+    # Create a station
+    s_id = "test-s-id"
+    m_id = "test-m-id"
+    label = "some station"
+    coord = (-2.0, 4.0)
+    river = "River X"
+    town = "My Town"
+    trange = (-2.3, 3.4445)
+    s = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
+
+    assert s.typical_range_consistent()
+
+    trange = (2.3, -3.4445)
+    s = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
+    assert not s.typical_range_consistent()
+
+    s = MonitoringStation(s_id, m_id, label, coord, None, river, town)
+    assert not s.typical_range_consistent()
