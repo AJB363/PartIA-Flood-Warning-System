@@ -93,3 +93,25 @@ def test_stations_by_river_returns_a_dictionary_of_stations_by_rivers():
     expected_stations_by_rivers["E"] = [stations[6]]
 
     assert actual_stations_by_rivers == expected_stations_by_rivers
+
+
+def test_rivers_by_station_number_returns_a_list_of_river_names_with_the_number_of_stations_in_each():
+    stations = []
+    rivers = ["A", "B", "C", "A", "B", "D", "E", "B", "A", "C", "B", "D"]
+    for i in range(len(rivers)):
+        # Create stations
+        s_id = "test-s-id-" + str(i)
+        m_id = "test-m-id-" + str(i)
+        label = "some station " + str(i)
+        coord = (0.0, 0.0)
+        trange = (-2.3, 3.4445)
+        river = rivers[i]
+        town = "My Town " + str(i)
+        stations.append(MonitoringStation(s_id, m_id, label, coord, trange, river, town))
+
+    actual_rivers_by_station_number = geo.rivers_by_station_number(stations, 3)
+    expected_rivers_by_station_number = [("B", 4), ("A", 3), ("C", 2), ("D", 2)]
+
+    print(actual_rivers_by_station_number)
+
+    assert actual_rivers_by_station_number == expected_rivers_by_station_number

@@ -45,3 +45,28 @@ def stations_by_river(stations):
             by_river[station.river] = []
         by_river[station.river].append(station)
     return by_river
+
+
+def rivers_by_station_number(stations, N):
+    """ Returns a list of the N river names, and the count of how many stations are on the river,
+    from largest count to smallest """
+    # Get a dictionary of river names to counts
+    river_station_count = dict()
+    for station in stations:
+        if station.river not in river_station_count:
+            river_station_count[station.river] = 0
+        river_station_count[station.river] += 1
+
+    # Convert to a sorted list
+    as_sorted_list = sorted([(key, river_station_count[key]) for key in river_station_count],
+                            key=lambda x: x[1],
+                            reverse=True)
+
+    # Keep only the top N items
+    top_N_rivers_by_count = []
+    for i in range(N):
+        j = 0
+        while as_sorted_list[i][1] == as_sorted_list[i + j][1]:
+            top_N_rivers_by_count.append(as_sorted_list[i + j])
+            j += 1
+    return top_N_rivers_by_count
