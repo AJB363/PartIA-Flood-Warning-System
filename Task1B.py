@@ -3,7 +3,7 @@ from floodsystem.geo import stations_by_distance
 
 
 def run():
-    """Requirements for Task 1A"""
+    """Requirements for Task 1B"""
 
     # Build list of stations
     stations = build_station_list()
