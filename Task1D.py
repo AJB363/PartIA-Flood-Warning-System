@@ -12,7 +12,7 @@ def run():
     rivers = rivers_with_station(stations)
 
     # Print the first 10 rivers
-    print(sorted(rivers)[:10])
+    print("{} stations. First 10 - {}".format(len(rivers), sorted(rivers)[:10]))
 
     # Get the dictionary of stations by river
     by_rivers = stations_by_river(stations)
