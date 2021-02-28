@@ -5,6 +5,9 @@ import matplotlib.dates as d
 def polyfit(dates, levels, p):
     """ Finds the polynomial of degree p that best fits the graph of levels against dates. """
 
+    if len(levels) != len(dates):
+        return False
+
     dates_f = d.date2num(dates)
 
     # Sets x_0 to 0
