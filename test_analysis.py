@@ -52,4 +52,6 @@ def test_polyfit_returns_false_if_the_dates_and_levels_arrays_are_not_the_same_l
               polynomial(3),
               polynomial(4)]
 
-    assert polyfit(dates, levels, 5) is False
+    poly, d0 = polyfit(dates, levels, 5)
+    assert poly is False
+    assert d0 is False

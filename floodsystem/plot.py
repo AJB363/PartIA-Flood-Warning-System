@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as d
 from numpy import linspace
-from floodsystem.analysis import polyfit
+from .analysis import polyfit
 
 
 def plot_water_levels(station, dates, levels):
