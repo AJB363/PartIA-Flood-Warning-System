@@ -51,7 +51,6 @@ def towns_most_at_risk(stations, N):
     gradient_average_points = 5
 
     # Calculate the current risk level for each station
-    risk_levels = ["low", "moderate", "high", "severe"]
     stations_most_at_risk = []
     for station in stations:
         # Gets the current station level
@@ -70,16 +69,28 @@ def towns_most_at_risk(stations, N):
         gradient_avg /= gradient_average_points
 
         # Estimates the expected relative water height in 1 day
-        expected_level = station.relative_water_level() + gradient_avg
+        expected_level = station.latest_level + gradient_avg
 
-        # Risk levels: low <= 0.25, moderate <= 0.5, high <= 0.75, severe >= 1
-        risk = risk_levels[round(expected_level * 4)]
+        expected_relative_level = 0.0
+        if station.typical_range_consistent():
+            expected_relative_level = (expected_level - station.typical_range[0]) / (station.typical_range[1] - station.typical_range[0])
 
-        station_with_risk_level = (station, expected_level, risk)
+        # Assigns risk level
+        risk = ""
+        if expected_relative_level <= 0.5:    # Less than 50% of average maximum water level
+            risk = "low"
+        elif expected_relative_level <= 1.0:  # 50-100% of average maximum water level
+            risk = "moderate"
+        elif expected_relative_level <= 1.3:  # 0-30% higher than average maximum water level
+            risk = "high"
+        else:                                 # >30% higher than average maximum water level
+            risk = "severe"
+
+        station_with_risk_level = (station, risk, expected_relative_level)
         stations_most_at_risk.append(station_with_risk_level)
 
     # Sort the stations by risk level
-    stations_most_at_risk = sorted(stations_most_at_risk, key=lambda x: x[1], reverse=True)
+    stations_most_at_risk = sorted(stations_most_at_risk, key=lambda x: x[2], reverse=True)
 
     # Get the N towns most at risk
     N_towns_most_at_risk = []
@@ -92,8 +103,8 @@ def towns_most_at_risk(stations, N):
         if len(N_towns_most_at_risk) != 0 and station_r[0].town in [t[0] for t in N_towns_most_at_risk]:
             continue
 
-        # Adds the new town to the list, with it's severity and expected water level
-        town_risk_profile = (station_r[0].town, station_r[2], station_r[1])
+        # Adds the new town to the list, with it's severity and expected relative water level.
+        town_risk_profile = (station_r[0].town, station_r[1], station_r[2])
         N_towns_most_at_risk.append(town_risk_profile)
 
     return N_towns_most_at_risk
