@@ -14,7 +14,7 @@ def stations_level_over_threshold(stations, tol):
 
         try:
             if station.relative_water_level() > tol:
-                stations_over_threshold.append((station, station.relative_water_level()))
+                stations_over_threshold.append((station.name, station.relative_water_level()))
         except Exception:
             continue
 
@@ -22,8 +22,17 @@ def stations_level_over_threshold(stations, tol):
 
 
 def stations_highest_rel_level(stations, N):
-    # Misha TODO
-    return stations[:N]
+    '''Return N number of stations at which the water level relative to the typical range is highest'''
+    stations_at_risk = []
+    for station in stations:
+        try:
+            water_level = station.relative_water_level()
+            if water_level is not None:
+                    stations_at_risk.append((station.name, station.relative_water_level()))
+        except Exception:
+            continue
+
+    return sorted(stations_at_risk, key=lambda x: x[1], reverse=True)[:N]
 
 
 def towns_most_at_risk(stations, N):
