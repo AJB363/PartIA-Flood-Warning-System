@@ -4,8 +4,21 @@ from .analysis import polyfit
 
 
 def stations_level_over_threshold(stations, tol):
-    # Misha TODO
-    return
+    '''Return a list of tuples where each tuple holds a station with latest relative'''
+    '''water level above tol and the relative water level at the station.'''
+
+    stations_over_threshold = []
+    for station in stations:
+        if station.typical_range_consistent() is False:
+            continue
+
+        try:
+            if station.relative_water_level() > tol:
+                stations_over_threshold.append((station, station.relative_water_level()))
+        except Exception:
+            continue
+
+    return sorted(stations_over_threshold, key=lambda x: x[1], reverse=True)
 
 
 def stations_highest_rel_level(stations, N):

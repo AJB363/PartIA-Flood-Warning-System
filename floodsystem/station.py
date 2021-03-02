@@ -47,8 +47,10 @@ class MonitoringStation:
             return False
 
     def relative_water_level(self):
-        # Misha TODO
-        return 0
+        """Return the latest water level as a fraction of the typical range"""
+        if self.typical_range_consistent() is False:
+            return None
+        return (self.latest_level - self.typical_range[0])/(self.typical_range[1] - self.typical_range[0])
 
 
 def inconsistent_typical_range_stations(stations):
