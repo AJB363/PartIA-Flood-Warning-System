@@ -6,7 +6,9 @@ def polyfit(dates, levels, p):
     """ Finds the polynomial of degree p that best fits the graph of levels against dates. """
 
     if len(levels) != len(dates):
-        return False
+        return False, False
+    if len(dates) == 0:
+        return False, False
 
     dates_f = d.date2num(dates)
 

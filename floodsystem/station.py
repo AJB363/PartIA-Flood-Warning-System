@@ -46,10 +46,9 @@ class MonitoringStation:
         except Exception:
             return False
 
-
     def relative_water_level(self):
         # Misha TODO
-        return
+        return 0
 
 
 def inconsistent_typical_range_stations(stations):
