@@ -26,29 +26,29 @@ def test_towns_most_at_risk_returns_towns_sorted_by_risk_level():
 
 def test_stations_level_over_threshold():
 
-    test_tol = 0.7
-    test_stations1 = []
+    test_tol = 0.5
     s_id = "test-s-id"
     m_id = "test-m-id"
     label = "some station"
     coord = (-2.0, 4.0)
     river = "River X"
     town = "My Town"
-    trange1 = (1.1, 3.0)
-    trange2 = (-1.2, 2.5)
-    trange3 = (-1.67, 3.14)
-    s1 = MonitoringStation(s_id, m_id, label, coord, trange1, river, town)
-    s2 = MonitoringStation(s_id, m_id, label, coord, trange2, river, town)
-    s3 = MonitoringStation(s_id, m_id, label, coord, trange3, river, town)
-    test_stations2 = [s1, s2, s3]
+    trange = (0, 1)
+    s1 = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
+    s2 = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
+    s3 = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
+    s4 = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
+    s5 = MonitoringStation(s_id, m_id, label, coord, trange, river, town)
+    s1.latest_level = 0.9
+    s2.latest_level = 0.4
+    s3.latest_level = 1.5
+    s4.latest_level = -1.0
+    s5.latest_level = None
+    stations = [s1, s2, s3, s4, s5]
 
-    for station in test_stations2:
-        if station.relative_water_level() > test_tol:
-            test_stations1.append((station.name, station.relative_water_level()))
-
-    expected_level_over_threshold = sorted(test_stations1, key=lambda x: x[1], reverse=True)
-    actual_level_over_threshold = stations_level_over_threshold(test_stations2, test_tol)
-    assert expected_level_over_threshold == actual_level_over_threshold
+    expected_stations = [s3, s2]
+    actual_stations = stations_level_over_threshold(stations, test_tol)
+    assert expected_stations == actual_stations
 
 
 def test_stations_highest_rel_level():
@@ -63,21 +63,18 @@ def test_stations_highest_rel_level():
     trange1 = (1.1, 3.0)
     trange2 = (-1.2, 2.5)
     trange3 = (-1.67, 3.14)
+    trange4 = (0, 1)
     s1 = MonitoringStation(s_id, m_id, label, coord, trange1, river, town)
     s2 = MonitoringStation(s_id, m_id, label, coord, trange2, river, town)
     s3 = MonitoringStation(s_id, m_id, label, coord, trange3, river, town)
-    test_stations = [s1, s2, s3]
+    s4 = MonitoringStation(s_id, m_id, label, coord, trange4, river, town)
+    s1.latest_level = 1.5
+    s2.latest_level = 1.0
+    s3.latest_level = -0.9
+    s4.latest_level = None
+    stations = [s1, s2, s3, s4]
 
-    assert s1.relative_water_level() is not None
-    assert s2.relative_water_level() is not None
-    assert s3.relative_water_level() is not None
+    expected_stations_highest_rel_level = [s2, s1, s3]
+    actual_stations_highest_rel_level = stations_highest_rel_level(stations, N)
 
-    expected_stations_highest_rel_level = []
-    for station in test_stations:
-        expected_stations_highest_rel_level.append(station.name, station.relative_water_level())
-
-    expected_stations_highest_rel_level_sorted = \
-        sorted(expected_stations_highest_rel_level, key=lambda x: x[1], reverse=True)[:N]
-    actual_stations_highest_rel_level = stations_highest_rel_level(test_stations, N)
-
-    assert expected_stations_highest_rel_level_sorted == actual_stations_highest_rel_level
+    assert expected_stations_highest_rel_level == actual_stations_highest_rel_level

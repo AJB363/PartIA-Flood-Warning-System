@@ -83,9 +83,10 @@ def test_relative_water_level():
 
     assert s1.relative_water_level() is None
 
-    trange2 = (-1.6211, 2.0)
+    trange2 = (1, 3)
     s2 = MonitoringStation(s_id, m_id, label, coord, trange2, river, town)
-    expected_relative_water_level = (0 - trange2[0]) / (trange2[1] - trange2[0])
+    s2.latest_level = 1.4
+    expected_relative_water_level = 0.4 / 2
     actual_relative_water_level = s2.relative_water_level()
 
     assert expected_relative_water_level == actual_relative_water_level
