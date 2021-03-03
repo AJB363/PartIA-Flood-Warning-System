@@ -12,7 +12,8 @@ def run():
     update_water_levels(stations)
 
     # Station names with the current relative level of 0.8
-    print(stations_level_over_threshold(stations, 0.9))
+    for s in stations_level_over_threshold(stations, 0.9):
+        print("{} {}".format(s[0].name, s[1]))
 
 
 if __name__ == "__main__":

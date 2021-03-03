@@ -24,7 +24,7 @@ def test_towns_most_at_risk_returns_towns_sorted_by_risk_level():
         assert towns[i][2] >= towns[i + 1][2]
 
 
-def test_stations_level_over_threshold():
+def test_level_over_threshold_returns_an_ordered_list_of_stations_that_are_over_the_threshold_level():
 
     test_tol = 0.5
     s_id = "test-s-id"
@@ -46,12 +46,16 @@ def test_stations_level_over_threshold():
     s5.latest_level = None
     stations = [s1, s2, s3, s4, s5]
 
-    expected_stations = [s3, s1]
+    expected_stations = [(s3, 1.5), (s1, 0.9)]
     actual_stations = stations_level_over_threshold(stations, test_tol)
-    assert expected_stations == actual_stations
+
+    assert len(expected_stations) == len(actual_stations)
+    for i in range(len(expected_stations)):
+        assert expected_stations[i][0] == actual_stations[i][0]
+        assert expected_stations[i][1] == round(actual_stations[i][1], 2)
 
 
-def test_stations_highest_rel_level():
+def test_highest_rel_level_lists_stations_in_order_from_the_highest_to_lowest_relative_water_level():
 
     N = 3
     s_id = "test-s-id"
@@ -74,7 +78,7 @@ def test_stations_highest_rel_level():
     s4.latest_level = None
     stations = [s1, s2, s3, s4]
 
-    expected_stations_highest_rel_level = [s1, s3, s2]
-    actual_stations_highest_rel_level = stations_highest_rel_level(stations, N)
+    expected_stations = [s1, s3, s2]
+    actual_stations = stations_highest_rel_level(stations, N)
 
-    assert expected_stations_highest_rel_level == actual_stations_highest_rel_level
+    assert expected_stations == actual_stations

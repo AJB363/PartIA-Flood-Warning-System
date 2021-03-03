@@ -14,9 +14,10 @@ def run():
     update_water_levels(stations)
 
     # 10 Stations at which the current relative water level is highest
-    print(stations_highest_rel_level(stations, 10))
+    for s in stations_highest_rel_level(stations, 10):
+        print("{} {}".format(s.name, s.relative_water_level()))
 
 
 if __name__ == "__main__":
-    print("*** Task 2c: CUED Part IA Flood Warning System ***")
+    print("*** Task 2C: CUED Part IA Flood Warning System ***")
     run()
