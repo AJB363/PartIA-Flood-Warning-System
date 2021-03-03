@@ -46,7 +46,7 @@ def test_stations_level_over_threshold():
     s5.latest_level = None
     stations = [s1, s2, s3, s4, s5]
 
-    expected_stations = [s3, s2]
+    expected_stations = [s3, s1]
     actual_stations = stations_level_over_threshold(stations, test_tol)
     assert expected_stations == actual_stations
 
@@ -68,13 +68,13 @@ def test_stations_highest_rel_level():
     s2 = MonitoringStation(s_id, m_id, label, coord, trange2, river, town)
     s3 = MonitoringStation(s_id, m_id, label, coord, trange3, river, town)
     s4 = MonitoringStation(s_id, m_id, label, coord, trange4, river, town)
-    s1.latest_level = 1.5
+    s1.latest_level = 4.1
     s2.latest_level = 1.0
-    s3.latest_level = -0.9
+    s3.latest_level = 1.9
     s4.latest_level = None
     stations = [s1, s2, s3, s4]
 
-    expected_stations_highest_rel_level = [s2, s1, s3]
+    expected_stations_highest_rel_level = [s1, s3, s2]
     actual_stations_highest_rel_level = stations_highest_rel_level(stations, N)
 
     assert expected_stations_highest_rel_level == actual_stations_highest_rel_level

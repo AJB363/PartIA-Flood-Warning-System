@@ -80,6 +80,7 @@ def test_relative_water_level():
     town = "My Town"
     trange1 = (3, 1)
     s1 = MonitoringStation(s_id, m_id, label, coord, trange1, river, town)
+    s1.latest_level = 1
 
     assert s1.relative_water_level() is None
 
