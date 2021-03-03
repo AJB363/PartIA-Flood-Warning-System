@@ -49,8 +49,8 @@ def test_typical_range_consistent_is_true_only_for_consistent_typical_ranges():
 
 
 def test_inconsistent_typical_range_stations_returns_a_list_of_all_inconsistent_stations():
-    stations = []
 
+    stations = []
     s_id = "test-s-id"
     m_id = "test-m-id"
     label = "some station"
@@ -68,3 +68,26 @@ def test_inconsistent_typical_range_stations_returns_a_list_of_all_inconsistent_
     actual_inconsistent_stations = inconsistent_typical_range_stations(stations)
     expected_inconsistent_stations = [stations[1], stations[2]]
     assert expected_inconsistent_stations == actual_inconsistent_stations
+
+
+def test_relative_water_level():
+
+    s_id = "test-s-id"
+    m_id = "test-m-id"
+    label = "some station"
+    coord = (-2.0, 4.0)
+    river = "River X"
+    town = "My Town"
+    trange1 = (3, 1)
+    s1 = MonitoringStation(s_id, m_id, label, coord, trange1, river, town)
+    s1.latest_level = 1
+
+    assert s1.relative_water_level() is None
+
+    trange2 = (1, 3)
+    s2 = MonitoringStation(s_id, m_id, label, coord, trange2, river, town)
+    s2.latest_level = 1.4
+    expected_relative_water_level = 0.2
+    actual_relative_water_level = round(s2.relative_water_level(), 2)
+
+    assert expected_relative_water_level == actual_relative_water_level
