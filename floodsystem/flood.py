@@ -73,7 +73,8 @@ def towns_most_at_risk(stations, N):
 
         expected_relative_level = 0.0
         if station.typical_range_consistent():
-            expected_relative_level = (expected_level - station.typical_range[0]) / (station.typical_range[1] - station.typical_range[0])
+            expected_relative_level = ((expected_level - station.typical_range[0])
+                                       / (station.typical_range[1] - station.typical_range[0]))
 
         # Assigns risk level
         risk = ""
