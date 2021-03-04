@@ -13,6 +13,9 @@ def plot_water_levels(station, dates, levels):
         return
 
     plt.plot(dates, levels)
+    if station.typical_range_consistent():
+        plt.hlines(station.typical_range[0], dates[0], dates[-1], linestyles='dotted')
+        plt.hlines(station.typical_range[1], dates[0], dates[-1], linestyles='dotted')
 
     plt.xlabel('date')
     plt.ylabel('water level (m)')
@@ -36,6 +39,9 @@ def plot_water_level_with_fit(station, dates, levels, p):
 
     plt.plot(dates, levels)
     plt.plot(dates, poly(x))
+    if station.typical_range_consistent():
+        plt.hlines(station.typical_range[0], dates[0], dates[-1], linestyles='dotted')
+        plt.hlines(station.typical_range[1], dates[0], dates[-1], linestyles='dotted')
 
     plt.xlabel('date')
     plt.ylabel('water level (m)')
